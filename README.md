@@ -11,21 +11,17 @@ However, this study was limited by analysis of only *C. elegans* and my rotation
 ### Estimate telomere lengths of each isotype using [telseq](https://github.com/zd1/telseq)
 This scans BAMs for canonical telomeric repeats and caluclates the lengths based on density of these reads relative to the total number of reads. It considers them telomeres when there are at least 7 of these repeats.
 
-1. Setting up the conda environment: \
-*note that an older version of bamtools was installed first since telseq is not compatible with the current version*
-    ```
-    conda create --prefix /home/rrunyan1/data-eande106/software/conda_envs/telseq bamtools==2.5.2
-    conda activate /home/rrunyan1/data-eande106/software/conda_envs/telseq
-    conda install bioconda::telseq
-    ```
+1. Install telseq by cloning git repository and changing the information to be compatible with *C. elegans*
+    - see ```Steps to installing telseq``` in ```notebook.md``` for more details
+    - installed in ```data-eande106/software/telseq```
+
 2. create a list of isotype reference strains for each species
-- script: ```scripts/strain_list.sh```
-- output: ```isotype_reference_strains_lists/<species>_strains.txt```
+    - script: ```scripts/strain_list.sh```
+    - output: ```isotype_reference_strains_lists/<species>_strains.txt```
 
 3. create bam list to use in telseq for each species
-- script: ```scripts/bamlist.sh```
-- output: ```isotype_reference_strains_lists/<species>_bams```
-
+    - script: ```scripts/bamlist.sh```
+    - output: ```isotype_reference_strains_lists/<species>_bams```
 
 ### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 
@@ -34,3 +30,4 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
 ## Organization
 
 ## Data Sources
+

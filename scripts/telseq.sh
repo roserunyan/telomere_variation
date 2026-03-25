@@ -1,22 +1,34 @@
 #!/bin/bash
-#SBATCH --job-name=20260324_telseq_elegans
+#SBATCH --job-name=20260325_telseq_elegans
 #SBATCH --partition=parallel
 #SBATCH --account=eande106
-#SBATCH --time=24:00:00
+#SBATCH --time=08:00:00
 #SBATCH --mail-user=rrunyan1@jh.edu
 #SBATCH --mail-type=ALL
-#SBATCH --cpus-per-task=4
-##SBATCH --array=1-3
+#SBATCH --cpus-per-task=2
+#SBATCH --array=1-14
 #SBATCH --output=/home/rrunyan1/andersen_lab/output/%x/%A_%a.out
 
-# estimate telomere lengths for c. elegans 
+################################################
+### estimate telomere lengths for C. elegans ###
+################################################
+
+# load required modules
 module load gcc BamTools/2.5.2
 
-#SPECIES=("elegans", "briggsae", "tropicalis")
-CURRENT_SPECIES="elegans"    #${SPECIES[$SLURM_ARRAY_TASK_ID]}   #$(sed "${SLURM_ARRAY_TASK_ID}q;d" $SPECIES)
 
-TELSEQ="/home/rrunyan1/data-eande106/software/telseq/telseq/src/Telseq/telseq"
-BAMLIST="/home/rrunyan1/vast/projects/Rose/isotype_reference_strains_lists"
-OUT_DIR="/home/rrunyan1/vast/projects/Rose/results/telseq"
+# select each bamlist file as an array job
+BAMLIST_LIST="/home/rrunyan1/Rose/isotype_reference_strains_lists/bamlist_lists/elegans_bamlist_list.txt" # list of each sub bamlist
+# print current line of bamlist list file and delete the rest to perform script on that line (bamlist) only, repeat for each line of file to do script for each bamlist
+CURRENT_BAMLIST=$(sed "${SLURM_ARRAY_TASK_ID}q;d" $BAMLIST_LIST) # each job in the array will be one sub bamlist
 
-${TELSEQ} -m -z 'TTAGGC' -f ${BAMLIST}/${CURRENT_SPECIES}_bams.txt -o ${OUT_DIR}/${CURRENT_SPECIES}.telseq.txt
+# set paths
+TELSEQ="/home/rrunyan1/data-eande106/software/telseq/telseq/src/Telseq/telseq" # path to telseq software
+BAMLIST="/home/rrunyan1/Rose/isotype_reference_strains_lists/elegans_bamlist_split/${CURRENT_BAMLIST}" # path to sub bamlist the job is using
+OUT_DIR="/home/rrunyan1/Rose/results/telseq/elegans" # path to output directory
+mkdir -p ${OUT_DIR} # make output directory if it doesn't exist already
+
+# run telseq
+${TELSEQ} -z 'TTAGGC' -u -f ${BAMLIST} -o ${OUT_DIR}/${CURRENT_BAMLIST}.telseq.txt
+
+

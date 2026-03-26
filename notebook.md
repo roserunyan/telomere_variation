@@ -20,4 +20,16 @@ This notebook contains details not present in ```README.md``` that may be helpfu
     make
     ```
 
-    
+## Split the bamlists and make a list of the split bamlists to run 1 job per sublist of BAMs
+```
+SPECIES="elegans" # change to elegans, briggsae, or tropicalis and run afte changing it each time
+cd /home/rrunyan1/Rose/isotype_reference_strains_lists/bamlists
+split -l 50 ${SPECIES}$_bams.txt
+mv x* ../split_bamlists/${SPECIES}
+cd ../split_bamlists/${SPECIES}
+ls > ../../bamlist_lists/${SPECIES}_bamlist_list.txt
+```
+
+##
+cd /home/rrunyan1/Rose/results/telseq/elegans
+grep -h -v "^ReadGroup" x*.telseq.txt >> elegans.telseq.txt

@@ -15,13 +15,25 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - see ```Steps to installing telseq``` in ```notebook.md``` for more details
     - installed in ```data-eande106/software/telseq```
 
-2. create a list of isotype reference strains for each species
+2. Create a list of isotype reference strains for each species
     - script: ```scripts/strain_list.sh```
     - output: ```isotype_reference_strains_lists/<species>_strains.txt```
 
-3. create bam list to use in telseq for each species
+3. Create a bam list to use in telseq for each species
     - script: ```scripts/bamlist.sh```
     - output: ```isotype_reference_strains_lists/<species>_bams```
+
+4. Split the bamlists and make a list of the split bamlists to run 1 job per sublist of BAMs
+    - See ```notebook.md``` for code
+    - Each bamlist was split so that each sublist contains the paths to 50 BAM files
+
+4. Run telseq
+    - This script was run one time for each species. It is an array job, where each job was ran on one sublist (bamlist list) that contains the path to 50 BAM files. The array range was 1- # of sublsits, which is unique for each species
+    - script: ```scripts/telseq.sh```
+    - output: ```results/telseq/<species>/<sublist_name>.telseq.txt```
+    - The output is one file per job, each file containing the information for the 50 BAMs in the associated sublist
+
+5. Concatenate output files into one for each species and...
 
 ### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 
@@ -30,4 +42,5 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
 ## Organization
 
 ## Data Sources
+
 

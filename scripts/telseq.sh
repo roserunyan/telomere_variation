@@ -1,23 +1,23 @@
 #!/bin/bash
-#SBATCH --job-name=20260326_telseq_briggsae
+#SBATCH --job-name=20260326_telseq_tropicalis
 #SBATCH --partition=parallel
 #SBATCH --account=eande106
 #SBATCH --time=06:00:00
 #SBATCH --mail-user=rrunyan1@jh.edu
 #SBATCH --mail-type=ALL
 #SBATCH --cpus-per-task=2
-#SBATCH --array=1-15
+#SBATCH --array=1-13
 #SBATCH --output=/home/rrunyan1/andersen_lab/output/%x/%A_%a.out
 
-#################################################
-### estimate telomere lengths for C. briggsae ###
-#################################################
+###################################################
+### estimate telomere lengths for C. tropicalis ###
+###################################################
 
 # load required modules
 module load gcc BamTools/2.5.2
 
 # change based on species script is being run on
-SPECIES="briggsae" # options: elegans, briggsae, tropicalis
+SPECIES="tropicalis" # options: elegans, briggsae, tropicalis
 
 # select each bamlist file as an array job
 BAMLIST_LIST="/home/rrunyan1/Rose/isotype_reference_strains_lists/bamlist_lists/${SPECIES}_bamlist_list.txt" # list of each sub bamlist

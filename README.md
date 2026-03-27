@@ -33,7 +33,9 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - output: ```results/telseq/<species>/<sublist_name>.telseq.txt```
     - The output is one file per job, each file containing the information for the 50 BAMs in the associated sublist
 
-5. Concatenate output files into one for each species and...
+5. Concatenate files to have one tsv per species
+    - See ```notebook.md``` for code
+    - Involves concatenating the files, adding the strain names, and adding a header to produce a tsv file
 
 ### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 

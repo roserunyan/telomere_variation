@@ -30,6 +30,17 @@ cd ../split_bamlists/${SPECIES}
 ls > ../../bamlist_lists/${SPECIES}_bamlist_list.txt
 ```
 
-##
-cd /home/rrunyan1/Rose/results/telseq/elegans
-grep -h -v "^ReadGroup" x*.telseq.txt >> elegans.telseq.txt
+## Concatenate files to have one tsv per species
+```
+SPECIES="briggsae" # change to elegans, briggsae, or tropicalis
+cd /home/rrunyan1/Rose/results/telseq/${SPECIES}
+grep -h -v "^ReadGroup" x*.telseq.txt >> ${SPECIES}.telseq.txt
+paste /home/rrunyan1/Rose/isotype_reference_strains_lists/strainlists/${SPECIES}_strains.txt ${SPECIES}.telseq.txt > ${SPECIES}.telseq.tsv.tmp
+rm ${SPECIES}.telseq.txt
+telseq -h > header.tsv
+echo -e "Strain\t$(cat header.tsv)" | cat - ${SPECIES}.telseq.tsv.tmp  > ${SPECIES}.telseq.tsv
+rm header.tsv
+rm ${SPECIES}.telseq.tsv.tmp
+```
+
+/home/rrunyan1/vast/LabData/FinishedPapers/2016_sp_Cook_sp_et_sp_al._sp_Genetics

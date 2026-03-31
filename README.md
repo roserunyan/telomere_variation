@@ -11,8 +11,7 @@ However, this study was limited by analysis of only *C. elegans* and my rotation
 ### Estimate telomere lengths of each isotype using [telseq](https://github.com/zd1/telseq)
 This scans BAMs for canonical telomeric repeats and caluclates the lengths based on density of these reads relative to the total number of reads. It considers them telomeres when there are at least 7 of these repeats.
 
-1. Install telseq by cloning git repository and changing the information to be compatible with *C. elegans*
-    - see ```Steps to installing telseq``` in ```notebook.md``` for more details
+1. Install telseq by cloning git repository, change the information to be compatible with *Caenorhabditis*, and configure.
     - installed in ```data-eande106/software/telseq```
 
 2. Create a list of isotype reference strains for each species
@@ -24,7 +23,6 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - output: ```isotype_reference_strains_lists/<species>_bams```
 
 4. Split the bamlists and make a list of the split bamlists to run 1 job per sublist of BAMs
-    - See ```notebook.md``` for code
     - Each bamlist was split so that each sublist contains the paths to 50 BAM files
 
 4. Run telseq
@@ -34,10 +32,18 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - The output is one file per job, each file containing the information for the 50 BAMs in the associated sublist
 
 5. Concatenate files to have one tsv per species
-    - See ```notebook.md``` for code
-    - Involves concatenating the files, adding the strain names, and adding a header to produce a tsv file
+    - Concatenate the files, add the strain names, and add a header to produce a tsv file
+    - final tsvs in ```results/telseq/<species>/<species>.telseq.tsv```
 
 ### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
+These are the steps to run the Andersen lab NemaScan nextflow pipeline that will perform the GWA
+
+1. Create a phenotype txt file for each spcies to input into nextflow
+    - First column is strain, second column is length estimate
+
+2. Run GWA nextflow pipeline for each species separately
+    - script: ``scripts/nemascan.sh`` in tmux session
+
 
 ## Results
 

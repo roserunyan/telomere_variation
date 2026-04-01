@@ -43,6 +43,7 @@ These are the steps to run the Andersen lab NemaScan nextflow pipeline that will
 
 2. Run GWA nextflow pipeline for each species separately
     - script: ``scripts/nemascan.sh`` in tmux session
+        - first command line argument is the species the script will run on. Example: ``./nemascan.sh elegans``
 
 
 ## Results

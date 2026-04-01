@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Run this script in tmux session
-source activate /data/eande106/software/conda_envs/nf24_env
+# actuivate conda environment if not already activaed: 
+    # source activate /data/eande106/software/conda_envs/nf24_env
 
-# Only change this variable and nothing else to either elegans, briggsae, or tropicalis
-SPECIES="briggsae"
+# Command line arguement should be elegans, briggsae, or tropicalis
+SPECIES=$1
 
 # change to working directory where .nextflow.log will be output
 cd /home/rrunyan1/Rose/analysis/nemascan/${SPECIES}

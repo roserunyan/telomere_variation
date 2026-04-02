@@ -35,6 +35,12 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - Concatenate the files, add the strain names, and add a header to produce a tsv file
     - final tsvs in ```results/telseq/<species>/<species>.telseq.tsv```
 
+6. Visualize results
+    - Look at distribution of data
+    - Make strain vs. telomere length plot
+    - script: ``scripts/telomere_lengths_plot.R`` R version: 4.3.1
+    - plots: ``results/telseq/<species>/<species>_strain_vs_telo-length.png`` and ``results/telseq/<species>/<species>_telo-length_dsitribution.png``
+
 ### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 These are the steps to run the Andersen lab NemaScan nextflow pipeline that will perform the GWA
 
@@ -44,12 +50,5 @@ These are the steps to run the Andersen lab NemaScan nextflow pipeline that will
 2. Run GWA nextflow pipeline for each species separately
     - script: ``scripts/nemascan.sh`` in tmux session
         - first command line argument is the species the script will run on. Example: ``./nemascan.sh elegans``
-
-
-## Results
-
-## Organization
-
-## Data Sources
 
 

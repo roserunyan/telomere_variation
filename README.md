@@ -41,11 +41,42 @@ This scans BAMs for canonical telomeric repeats and caluclates the lengths based
     - script: ``scripts/telomere_lengths_plot.R`` R version: 4.3.1
     - plots: ``results/telseq/<species>/<species>_strain_vs_telo-length.png`` and ``results/telseq/<species>/<species>_telo-length_dsitribution.png``
 
-### 2. Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
+### Residualize telomere length estimates
+Since sequencing depth could potentially impact the calculated telomere lengths, we resizualize the telomere lengths by fitting telomere length to PCs derived from variance in sequencing depth and subtracting this from the telomere length estimates. \
+These steps were performed based off of [Nakao et al. (2026)](https://www.nature.com/articles/s41588-026-02567-1) and [Taub et al. (2021)](https://www.clinicalkey.com/#!/content/playContent/1-s2.0-S2666979X21001051?returnurl=https:%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS2666979X21001051%3Fshowall%3Dtrue&referrer=)
+
+1. Estimate read depth with [mosdepth](https://github.com/brentp/mosdepth)
+    - script: ``scripts/mosdepth.sh``
+    - only performed on high power mapping panel strains and only those will be considered for downstream steps
+    - use split bamlist method as described above and in ``notebook.md`` to reduce compute time
+    - although this may not be neccessary since computing power is not high
+    
+2. Create BED file with hyperdivergent regions to exclude from anlaysis
+    - must merge regions in existing BEDfile since it is strain specific
+    - script: ``scripts/bedtools-merge.sh``
+
+3. Rename chromosome numbers and remove MtDNA to be compatible with NGS-PCA
+    - chromosome name from I to chr1
+
+4. Calculate PCs with [NGS-PCA](https://github.com/PankratzLab/NGS-PCA)
+    - script: ``scripts/ngs-pca.sh``
+
+5. Run a linear regression model with PCs explaining over 0.1% of the read depth variance 
+    - script: ``scripts/residualize_telomeres.R``
+    - 2 samples do not have telomere length estimates: ECA245 and ECA249, so telseq was wun on them and their data was added to the LM
+
+6. Run telseq for the 2 samples without telomere length estimates
+
+
+
+
+
+### Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 These are the steps to run the Andersen lab NemaScan nextflow pipeline that will perform the GWA
 
 1. Create a phenotype txt file for each spcies to input into nextflow
     - First column is strain, second column is length estimate
+    - Remove any strains not in the highest power mapping panel
 
 2. Run GWA nextflow pipeline for each species separately
     - script: ``scripts/nemascan.sh`` in tmux session

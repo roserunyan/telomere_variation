@@ -109,18 +109,14 @@ rm ${SPECIES}.telseq.tsv.tmp
 Install NGS-PCA by downloading jar file into ``/home/rrunyan1/data-eande106/software/NGS-PCA``
 
 
-
-
-
 ## Perform GWA
-### Create phenotype file for each species
+### Create phenotype file for each species **(if not already done after finding residuals)**
 Strain in one column, telomere length in the next \
 ```
 SPECIES="tropicalis" # change to elegans, briggsae, or tropicalis
 cd /home/rrunyan1/Rose/results/telseq/${SPECIES}
 cut -f 1,8 ${SPECIES}.telseq.tsv > ${SPECIES}_telo_lengths.tsv
 ```
-
 
 ### Configure bash profile to run nextflow pipeline
 Add the following text to ```~/.bash_profile```
@@ -136,31 +132,3 @@ Start tmux session: ```tmux new -s TelomereNemaScan``` \
 Detach from session with ctrl-B, d, to keep running in background then reattach: ```tmux attach -t TelomereNemaScan``` \
 When it finishes, exit with ```exit```
 
-
-
-
-Remove any strain not in the highest power mapping panel
-For strain in elegans_telo_length.tsv$
-
-print all matches in file 2 that match file 1
-file1="/home/rrunyan1/Rose/isotype_reference_strains_lists/high_power_mapping_panels/ce_allout15_strains.txt"
-file2="/home/rrunyan1/Rose/results/telseq/elegans/elegans_telo_lengths.tsv"
-
-cut -f1 ${file2} | grep -Fx -f ${file1} - | wc -l
-
-
-# see if longer elegans in this list so we can verify actually that long??
-/home/rrunyan1/vast/data/c_elegans/genomes/WI_PacBio_assemblies/hifi
-
-# see which bams missing from high mapping data
-list="/home/rrunyan1/Rose/isotype_reference_strains_lists/bamlists/elegans_allout15_bams.txt"
-while read -r file; do
-    if [ -e "$file" ]; then
-        echo "$file Exists"
-    else
-        echo "$file Does not exist"
-    fi
-done < "$list" | less -S
-
-# bed file to exclude regions and must do intersect thing
-/home/rrunyan1/vast/data/c_elegans/WI/divergent_regions/20250625/20250625_c_elegans_divergent_regions_strain.bed.gz

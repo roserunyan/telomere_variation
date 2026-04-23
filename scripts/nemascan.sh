@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this script in tmux session
-# actuivate conda environment if not already activaed: 
+# activate conda environment if not already activaed: 
     # source activate /data/eande106/software/conda_envs/nf24_env
 
 # Command line arguement should be elegans, briggsae, or tropicalis
@@ -22,6 +22,6 @@ fi
 # run NemaScan
 nextflow run -latest andersenlab/nemascan \
 --vcf ${VCF} \
---traitfile /home/rrunyan1/Rose/results/telseq/${SPECIES}/${SPECIES}_telo_lengths.tsv \
+--traitfile /home/rrunyan1/Rose/results/NGS-PCA/${SPECIES}/${SPECIES}_telo_lengths.resid.tsv
 --species c_${SPECIES} \
 --out /home/rrunyan1/Rose/results/nemascan/${SPECIES}

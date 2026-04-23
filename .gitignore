@@ -2,3 +2,6 @@
 isotype_reference_strains_lists/
 analysis/
 .RData
+results/NGS-PCA/elegans/results
+results/mosdepth
+results/telseq/elegans_missing

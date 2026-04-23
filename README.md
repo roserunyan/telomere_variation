@@ -65,20 +65,20 @@ These steps were performed based off of [Nakao et al. (2026)](https://www.nature
     - script: ``scripts/residualize_telomeres.R``
     - 2 samples do not have telomere length estimates: ECA245 and ECA249, so telseq was wun on them and their data was added to the LM
 
-6. Run telseq for the 2 samples without telomere length estimates
-
-
-
-
+6. Examine results
+    - Plots in ``/home/rrunyan1/Rose/results/NGS-PCA/elegans/plots``
+        - pca-pc2 is to see if samples cluster based on PCs
+        - PC1-tel_length shows how well PC1 predicts telomere length
+            - in *c. elegans*, the line is basically flat indicating PC does not predict telomere length
+    - Percent variance explained by each PC and a list of PCs explaining over 0.1% of the data are found in ``/home/rrunyan1/Rose/results/NGS-PCA/elegans/PCs``
+    - Residualized telomere lengths: ``/home/rrunyan1/Rose/results/NGS-PCA/elegans/elegans_telo_lengths.resid.tsv``
+        - These are the residuals from observed telomere length- predicted based on PC lm model
+        - **GWA will be performed on these**
 
 ### Perform GWA using [NemaScan](https://github.com/AndersenLab/NemaScan) to see where the variation in the total length could be coming from
 These are the steps to run the Andersen lab NemaScan nextflow pipeline that will perform the GWA
 
-1. Create a phenotype txt file for each spcies to input into nextflow
-    - First column is strain, second column is length estimate
-    - Remove any strains not in the highest power mapping panel
-
-2. Run GWA nextflow pipeline for each species separately
+1. Run GWA nextflow pipeline for each species separately
     - script: ``scripts/nemascan.sh`` in tmux session
         - first command line argument is the species the script will run on. Example: ``./nemascan.sh elegans``
 

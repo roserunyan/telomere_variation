@@ -2,9 +2,12 @@
 isotype_reference_strains_lists/
 analysis/
 .RData
-results/NGS-PCA/elegans/results
+results/NGS-PCA/results
 results/mosdepth
 results/telseq/elegans_missing
+results/telseq/elegans/elegans_telo_lengths_all.tsv
+results/telseq/briggsae/briggsae_telo_lengths.tsv
+results/telseq/tropicalis/tropicalis_telo_lengths.tsv
 .Rproj.user
 
 scripts/telseq_missing.sh

@@ -22,6 +22,6 @@ fi
 # run NemaScan
 nextflow run -latest andersenlab/nemascan \
 --vcf ${VCF} \
---traitfile /home/rrunyan1/Rose/results/NGS-PCA/${SPECIES}/${SPECIES}_telo_lengths.resid.tsv
+--traitfile /home/rrunyan1/Rose/results/NGS-PCA/${SPECIES}/${SPECIES}_telo_lengths.resid.tsv \
 --species c_${SPECIES} \
 --out /home/rrunyan1/Rose/results/nemascan/${SPECIES}

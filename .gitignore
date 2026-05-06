@@ -5,3 +5,9 @@ analysis/
 results/NGS-PCA/elegans/results
 results/mosdepth
 results/telseq/elegans_missing
+.Rproj.user
+
+scripts/telseq_missing.sh
+scripts/pot-2_env_associations.R
+scripts/mosdepth_missing.sh
+scripts/elegans_run1_GWAS_figures.R

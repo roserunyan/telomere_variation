@@ -6,7 +6,7 @@ library(tidyverse)
 
 ### Plot PC1 and PC2
 # load in per sample PC data matrix
-elegans_pcs <- read.delim("/vast/eande106/projects/Rose/results/NGS-PCA/elegans/eleganssvd.pcs.txt", header = TRUE)
+elegans_pcs <- read.delim("/vast/eande106/projects/Rose/results/NGS-PCA/elegans/results/eleganssvd.pcs.txt", header = TRUE)
 
 # Plot first 2 PCs
 ggplot(elegans_pcs, aes(x=PC1, y=PC2)) + 
@@ -19,7 +19,7 @@ ggsave("/vast/eande106/projects/Rose/results/NGS-PCA/elegans/plots/pc1-pc2.png",
 
 ### Percent variance explained by each PC
 # load in PC singular values
-elegans_pcs_single <- read.delim("/vast/eande106/projects/Rose/results/NGS-PCA/elegans/eleganssvd.singularvalues.txt", header = TRUE)
+elegans_pcs_single <- read.delim("/vast/eande106/projects/Rose/results/NGS-PCA/elegans/results/eleganssvd.singularvalues.txt", header = TRUE)
 
 # Caluclate percent variance explain by each PC
 var <- elegans_pcs_single$SINGULAR_VALUES^2
@@ -49,6 +49,11 @@ colnames(elegans_pcs)
 elegans_pcs_telo <- merge(elegans_pcs, telomere_lengths, by = "SAMPLE", all.x = TRUE)
 colnames(elegans_pcs_telo)
 
+# Extract just telomere lengths and strain
+telo_lengths_high <- elegans_pcs_telo %>% select("SAMPLE", "TELOMERE_LENGTH")
+names(telo_lengths_high) <- c("strain", "TELOMERE_LENGTH")
+write_tsv(telo_lengths_high, "~/Rose/results/telseq/elegans/elegans_telo_lengths_high-map.tsv")
+
 # see which samples do not have telomere length estimates
 elegans_pcs_telo$TELOMERE_LENGTH
 elegans_pcs_telo$SAMPLE[is.na(elegans_pcs_telo$TELOMERE_LENGTH)] # "ECA245" "ECA249"
@@ -57,8 +62,10 @@ elegans_pcs_telo$SAMPLE[is.na(elegans_pcs_telo$TELOMERE_LENGTH)] # "ECA245" "ECA
 
 # Run Linear regression model with telomere length as dependent variable and all columns except SAMPLE as predictor
 model <- lm(TELOMERE_LENGTH ~ .-SAMPLE, data = elegans_pcs_telo)
-summary(model)
+summary(model) #adj R^2 = 0.4777 (kind of high), p-value: < 2.2e-16
 resid(model)
+coef(model)["PC1"]
+summary(model)$r.squared
 
 # Add new telomere lengths in 
 elegans_pcs_telo$TELOMERE_RESID <- resid(model)

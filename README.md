@@ -5,7 +5,7 @@
 ### Variation in telomere lengths across 3 Caenorhabditis species: *c. elegans, c. briggsae,* and *c. tropicalis*.
 This project is based on a study published from the lab previously: [The Genetic Basis of Natural Variation in Caenorhabditis elegans Telomere Length](https://academic.oup.com/genetics/article/204/1/371/6066292#supplementary-data). This study compared telomere lengths of lab and wild strains of *C. elegans* and found that mutations in pot2 on chromosome II causes the natural variation in telomere length. But telomere length did not seem to have a fitness impact.
 
-However, this study was limited by analysis of only *C. elegans* and my rotation project aims to include multiple species using one reference strain per isotype to limit skewing of results due to very similar strains.
+My rotation project aims to expand on this study and include multiple species using one reference strain per isotype to limit skewing of results due to very similar strains.
 
 ## Steps
 ### Estimate telomere lengths of each isotype using [telseq](https://github.com/zd1/telseq)
